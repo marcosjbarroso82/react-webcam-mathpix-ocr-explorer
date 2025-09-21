@@ -1,21 +1,32 @@
-# React Webcam Explorer
+# Mathpix OCR Explorer
 
-Un proyecto completo de exploración de la librería `react-webcam` para aprender y experimentar con funcionalidades avanzadas de cámara web en React. Este proyecto está especialmente diseñado para captura de pantallas de notebook con celular para posterior procesamiento OCR.
+Un proyecto completo de exploración de la API de OCR de Mathpix para aprender y experimentar con reconocimiento de texto y fórmulas matemáticas. Este proyecto combina la captura de imágenes con `react-webcam` y el procesamiento avanzado con la API de Mathpix.
 
 ## 🎯 Objetivo
 
-Este proyecto sirve como un laboratorio completo para explorar las capacidades de `react-webcam`, incluyendo:
-- Captura de fotos con configuración avanzada
-- Diferentes configuraciones de cámara y calidad
-- Formatos de imagen (JPEG/PNG) con control de calidad
-- Controles de resolución y parámetros de video
-- Información detallada de la cámara y capacidades
+Este proyecto sirve como un laboratorio completo para explorar las capacidades de la API de Mathpix OCR, incluyendo:
+- Reconocimiento de texto con alta precisión
+- Conversión de fórmulas matemáticas a LaTeX y MathML
+- Captura de imágenes con react-webcam
+- Subida de archivos para procesamiento
+- Múltiples formatos de salida (texto, LaTeX, MathML)
 - Interfaz responsive optimizada para móviles
-- Configuración persistente en localStorage
+- Configuración persistente de API y cámara
 
 ## 🚀 Características Implementadas
 
-### 📷 **Página de Cámara** (`/`)
+### 🔍 **Página de OCR** (`/`)
+- **Subida de archivos** para procesamiento con Mathpix API
+- **Captura con cámara** integrada usando react-webcam
+- **Procesamiento de imágenes** con reconocimiento de texto y fórmulas
+- **Múltiples formatos de salida**:
+  - Texto plano extraído
+  - Fórmulas en formato LaTeX
+  - Representación MathML
+- **Interfaz intuitiva** para gestión de archivos y resultados
+- **Configuración de API** para credenciales de Mathpix
+
+### 📷 **Página de Cámara** (`/camera`)
 - **Vista previa en tiempo real** de la cámara con configuración personalizable
 - **Captura de fotos** con delay de enfoque configurable
 - **Información detallada de la cámara** incluyendo:
@@ -38,13 +49,17 @@ Este proyecto sirve como un laboratorio completo para explorar las capacidades d
 - **Optimizado para OCR** con configuración específica para captura de pantallas
 
 ### 🖼️ **Galería** (`/gallery`)
-- Interfaz preparada para mostrar fotos y videos capturados
+- Interfaz preparada para mostrar imágenes procesadas y sus resultados OCR
 - Diseño responsive con grid de imágenes
 - Estado vacío con instrucciones de uso
 - Funcionalidades planificadas documentadas
 
 ### ⚙️ **Configuración** (`/settings`)
 - **Configuración de cámara** completa con todos los parámetros
+- **Configuración de Mathpix API**:
+  - App ID y App Key
+  - Formatos de salida preferidos
+  - Opciones de procesamiento
 - **Configuración avanzada** adicional:
   - Auto-focus
   - Estabilización
@@ -54,8 +69,8 @@ Este proyecto sirve como un laboratorio completo para explorar las capacidades d
 
 ### ℹ️ **Acerca de** (`/about`)
 - Información completa del proyecto
-- Documentación sobre react-webcam
-- Guía de instalación
+- Documentación sobre Mathpix API
+- Guía de configuración de API
 - Lista de funcionalidades a explorar
 - Enlaces a recursos útiles
 
@@ -65,6 +80,7 @@ Este proyecto sirve como un laboratorio completo para explorar las capacidades d
 - **React Router 7** - Enrutamiento
 - **TypeScript** - Tipado estático
 - **TailwindCSS 4** - Estilos y diseño responsive
+- **Mathpix API** - Reconocimiento de texto y fórmulas matemáticas
 - **react-webcam 7.2.0** - Funcionalidad de cámara web
 - **Vite** - Herramienta de construcción
 - **gh-pages** - Despliegue en GitHub Pages
@@ -75,6 +91,7 @@ Este proyecto sirve como un laboratorio completo para explorar las capacidades d
 - Node.js 18+ 
 - Navegador moderno con soporte para WebRTC
 - Cámara web o dispositivo móvil con cámara
+- Cuenta de Mathpix con App ID y App Key
 
 ### Instalación
 ```bash
@@ -90,6 +107,12 @@ npm run dev
 ```
 
 La aplicación estará disponible en `http://localhost:5173`.
+
+### Configuración de Mathpix API
+
+1. Regístrate en [mathpix.com](https://mathpix.com)
+2. Obtén tu App ID y App Key desde el dashboard
+3. Configura las credenciales en la página de Configuración de la aplicación
 
 ### Scripts Disponibles
 
@@ -121,7 +144,8 @@ app/
 │   ├── CameraSettingsContext.tsx # Contexto global para configuración de cámara
 │   └── ThemeContext.tsx         # Contexto de tema (claro/oscuro)
 ├── routes/
-│   ├── camera.tsx               # Página principal de cámara (/)
+│   ├── ocr.tsx                  # Página principal de OCR (/)
+│   ├── camera.tsx               # Página de cámara (/camera)
 │   ├── gallery.tsx              # Galería de capturas (/gallery)
 │   ├── settings.tsx             # Configuraciones (/settings)
 │   └── about.tsx                # Información del proyecto (/about)
@@ -129,9 +153,18 @@ app/
 └── root.tsx                     # Componente raíz de la aplicación
 ```
 
-## ⚙️ Configuración de Cámara
+## ⚙️ Configuración
 
-### Parámetros Principales
+### Configuración de Mathpix API
+
+| Parámetro | Descripción | Requerido |
+|-----------|-------------|-----------|
+| `appId` | ID de aplicación de Mathpix | Sí |
+| `appKey` | Clave de aplicación de Mathpix | Sí |
+| `outputFormats` | Formatos de salida deseados | No |
+| `includeMath` | Incluir reconocimiento de fórmulas | No |
+
+### Configuración de Cámara
 
 | Parámetro | Descripción | Valores | Por Defecto |
 |-----------|-------------|---------|-------------|
@@ -166,6 +199,7 @@ Para obtener mejores resultados en captura de pantallas para OCR:
 ## 🎨 Funcionalidades Implementadas
 
 ### ✅ Completadas
+- [x] Página principal de OCR con interfaz dummy
 - [x] Captura de fotos con diferentes formatos (JPEG/PNG)
 - [x] Configuración completa de resolución y calidad
 - [x] Información detallada de la cámara y capacidades
@@ -174,18 +208,20 @@ Para obtener mejores resultados en captura de pantallas para OCR:
 - [x] Manejo de errores y permisos de cámara
 - [x] Delay de enfoque configurable
 - [x] Optimización para captura de pantallas (OCR)
+- [x] Documentación actualizada para Mathpix
 
 ### 🔄 En Desarrollo
-- [ ] Grabación de videos
-- [ ] Galería funcional con almacenamiento local
-- [ ] Descarga automática de archivos
-- [ ] Filtros y efectos básicos
+- [ ] Integración con API de Mathpix
+- [ ] Procesamiento de imágenes con OCR
+- [ ] Mostrar resultados en múltiples formatos
+- [ ] Galería funcional con resultados OCR
 
 ### 📋 Planificadas
-- [ ] Integración con APIs de almacenamiento en la nube
-- [ ] Procesamiento de imágenes básico
-- [ ] Compartir archivos
-- [ ] Modo de captura por lotes
+- [ ] Configuración de credenciales de API
+- [ ] Manejo de errores de API
+- [ ] Exportación de resultados
+- [ ] Historial de procesamientos
+- [ ] Búsqueda en texto extraído
 
 ## 🚀 Despliegue
 
@@ -260,4 +296,4 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ---
 
-**Construido con ❤️ para explorar react-webcam y facilitar la captura de pantallas para OCR.**
+**Construido con ❤️ para explorar la API de Mathpix OCR y facilitar el reconocimiento de texto y fórmulas matemáticas.**

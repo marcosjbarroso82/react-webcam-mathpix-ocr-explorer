@@ -2,8 +2,8 @@ import type { Route } from "./+types/about";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Acerca de - React Webcam Explorer" },
-    { name: "description", content: "Información sobre react-webcam y este proyecto de exploración" },
+    { title: "Acerca de - Mathpix OCR Explorer" },
+    { name: "description", content: "Información sobre Mathpix API y este proyecto de exploración de OCR" },
   ];
 }
 
@@ -16,7 +16,7 @@ export default function About() {
         borderColor: 'var(--color-border)' 
       }}>
         <h1 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>ℹ️ Acerca de</h1>
-        <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>React Webcam Explorer</p>
+        <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>Mathpix OCR Explorer</p>
       </div>
 
       {/* Project Info */}
@@ -29,28 +29,28 @@ export default function About() {
               </svg>
             </div>
             <div>
-              <h2 className="text-lg font-semibold" style={{ color: 'var(--color-text-primary)' }}>React Webcam Explorer</h2>
+              <h2 className="text-lg font-semibold" style={{ color: 'var(--color-text-primary)' }}>Mathpix OCR Explorer</h2>
               <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>v1.0.0</p>
             </div>
           </div>
           <p className="text-sm mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-            Un proyecto de exploración para aprender y experimentar con la librería react-webcam. 
-            Este template te permite descubrir las capacidades de captura de cámara web en React.
+            Un proyecto de exploración para aprender y experimentar con la API de OCR de Mathpix. 
+            Este template te permite descubrir las capacidades de reconocimiento de texto y fórmulas matemáticas.
           </p>
         </div>
 
-        {/* React Webcam Info */}
+        {/* Mathpix API Info */}
         <div className="mb-6">
-          <h3 className="text-lg font-medium mb-3" style={{ color: 'var(--color-text-primary)' }}>Sobre react-webcam</h3>
+          <h3 className="text-lg font-medium mb-3" style={{ color: 'var(--color-text-primary)' }}>Sobre Mathpix API</h3>
           <div className="space-y-3">
             <div className="p-4 rounded-lg border" style={{ 
               backgroundColor: 'var(--color-surface)', 
               borderColor: 'var(--color-border)' 
             }}>
-              <h4 className="font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>¿Qué es react-webcam?</h4>
+              <h4 className="font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>¿Qué es Mathpix?</h4>
               <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-                Una librería de React que proporciona un componente simple para acceder a la cámara web del usuario 
-                y capturar fotos o videos directamente en el navegador.
+                Una API de reconocimiento óptico de caracteres (OCR) especializada en texto matemático y científico. 
+                Convierte imágenes de ecuaciones, fórmulas y texto a formato LaTeX, MathML y texto plano.
               </p>
             </div>
 
@@ -60,31 +60,39 @@ export default function About() {
             }}>
               <h4 className="font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>Características principales</h4>
               <ul className="text-sm space-y-1" style={{ color: 'var(--color-text-secondary)' }}>
-                <li>• Captura de fotos en diferentes formatos</li>
-                <li>• Grabación de videos</li>
-                <li>• Configuración de resolución y calidad</li>
-                <li>• Soporte para múltiples dispositivos</li>
-                <li>• API simple y fácil de usar</li>
+                <li>• Reconocimiento de fórmulas matemáticas complejas</li>
+                <li>• Conversión a LaTeX, MathML y texto plano</li>
+                <li>• Soporte para múltiples formatos de imagen</li>
+                <li>• Alta precisión en texto científico</li>
+                <li>• API REST fácil de integrar</li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Installation Guide */}
+        {/* API Setup Guide */}
         <div className="mb-6">
-          <h3 className="text-lg font-medium mb-3" style={{ color: 'var(--color-text-primary)' }}>Instalación</h3>
+          <h3 className="text-lg font-medium mb-3" style={{ color: 'var(--color-text-primary)' }}>Configuración de API</h3>
           <div className="p-4 rounded-lg border" style={{ 
             backgroundColor: 'var(--color-surface)', 
             borderColor: 'var(--color-border)' 
           }}>
             <p className="text-sm mb-3" style={{ color: 'var(--color-text-secondary)' }}>
-              Para empezar a usar react-webcam en este proyecto:
+              Para empezar a usar Mathpix API en este proyecto:
             </p>
-            <div className="bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
-              npm install react-webcam
+            <div className="space-y-2">
+              <div className="bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                1. Regístrate en mathpix.com
+              </div>
+              <div className="bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                2. Obtén tu App ID y App Key
+              </div>
+              <div className="bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                3. Configura las credenciales en la app
+              </div>
             </div>
             <p className="text-xs mt-2" style={{ color: 'var(--color-text-secondary)' }}>
-              Luego importa y usa el componente Webcam en tus páginas
+              Las imágenes se procesan enviando requests POST a la API de Mathpix
             </p>
           </div>
         </div>
@@ -94,12 +102,12 @@ export default function About() {
           <h3 className="text-lg font-medium mb-3" style={{ color: 'var(--color-text-primary)' }}>Funcionalidades a Explorar</h3>
           <div className="grid grid-cols-1 gap-2">
             {[
-              { icon: '📷', title: 'Captura de Fotos', desc: 'Tomar fotos con diferentes configuraciones' },
-              { icon: '🎥', title: 'Grabación de Videos', desc: 'Grabar videos con duración configurable' },
-              { icon: '⚙️', title: 'Configuración Avanzada', desc: 'Ajustar resolución, formato y calidad' },
-              { icon: '🖼️', title: 'Galería de Medios', desc: 'Ver y gestionar archivos capturados' },
-              { icon: '📱', title: 'Responsive Design', desc: 'Funciona en dispositivos móviles y desktop' },
-              { icon: '🔒', title: 'Permisos de Cámara', desc: 'Manejo de permisos del navegador' }
+              { icon: '🔍', title: 'Reconocimiento de Texto', desc: 'Extraer texto de imágenes con alta precisión' },
+              { icon: '🧮', title: 'Fórmulas Matemáticas', desc: 'Convertir ecuaciones a LaTeX y MathML' },
+              { icon: '📷', title: 'Captura con Cámara', desc: 'Tomar fotos directamente para procesar' },
+              { icon: '📁', title: 'Subida de Archivos', desc: 'Procesar imágenes desde el dispositivo' },
+              { icon: '📊', title: 'Múltiples Formatos', desc: 'Texto, LaTeX, MathML y más' },
+              { icon: '⚙️', title: 'Configuración API', desc: 'Gestionar credenciales y opciones' }
             ].map((feature, index) => (
               <div key={index} className="flex items-center space-x-3 p-3 rounded-lg border" style={{ 
                 backgroundColor: 'var(--color-surface)', 
@@ -124,6 +132,29 @@ export default function About() {
           <h3 className="text-lg font-medium mb-3" style={{ color: 'var(--color-text-primary)' }}>Recursos Útiles</h3>
           <div className="space-y-2">
             <a 
+              href="https://mathpix.com/docs" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block p-3 rounded-lg border hover:opacity-80 transition-opacity" 
+              style={{ 
+                backgroundColor: 'var(--color-surface)', 
+                borderColor: 'var(--color-border)' 
+              }}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="w-5 h-5 rounded" style={{ backgroundColor: 'var(--color-accent)' }}></div>
+                <div>
+                  <p className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>
+                    Mathpix API Documentation
+                  </p>
+                  <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
+                    Documentación oficial de la API de Mathpix
+                  </p>
+                </div>
+              </div>
+            </a>
+
+            <a 
               href="https://github.com/mozmorris/react-webcam" 
               target="_blank" 
               rel="noopener noreferrer"
@@ -142,30 +173,7 @@ export default function About() {
                     GitHub - react-webcam
                   </p>
                   <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
-                    Repositorio oficial y documentación
-                  </p>
-                </div>
-              </div>
-            </a>
-
-            <a 
-              href="https://reactrouter.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block p-3 rounded-lg border hover:opacity-80 transition-opacity" 
-              style={{ 
-                backgroundColor: 'var(--color-surface)', 
-                borderColor: 'var(--color-border)' 
-              }}
-            >
-              <div className="flex items-center space-x-3">
-                <div className="w-5 h-5 rounded" style={{ backgroundColor: 'var(--color-accent)' }}></div>
-                <div>
-                  <p className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>
-                    React Router
-                  </p>
-                  <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
-                    Framework de routing usado en este proyecto
+                    Librería para captura de cámara web
                   </p>
                 </div>
               </div>
