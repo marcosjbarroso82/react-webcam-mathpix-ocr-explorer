@@ -1,4 +1,9 @@
+import React, { useState, useCallback } from 'react';
 import type { Route } from "./+types/ocr";
+import { MathpixService } from '../services/mathpixService';
+import { useMathpixSettings } from '../contexts/MathpixSettingsContext';
+import FileUpload from '../components/FileUpload';
+import OCRResults from '../components/OCRResults';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,6 +13,71 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function OCR() {
+  const { settings: mathpixSettings } = useMathpixSettings();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [result, setResult] = useState<{
+    status: number;
+    data: any;
+    error?: string;
+    request?: {
+      url: string;
+      method: string;
+      headers: Record<string, string>;
+      body: FormData;
+      parameters: Record<string, any>;
+    };
+  } | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const processImage = useCallback(async (file: File) => {
+    // Validar archivo
+    const validation = MathpixService.validateImageFile(file);
+    if (!validation.valid) {
+      setError(validation.error || 'Archivo inválido');
+      setIsProcessing(false);
+      return;
+    }
+
+    // Validar configuración
+    if (!mathpixSettings.appId || !mathpixSettings.appKey) {
+      setError('Configuración de Mathpix incompleta. Ve a Configuración para agregar tus credenciales.');
+      setIsProcessing(false);
+      return;
+    }
+
+    setIsProcessing(true);
+    setError(null);
+    setSelectedFile(file);
+    setResult(null);
+
+    try {
+      const result = await MathpixService.processImage(file, {
+        appId: mathpixSettings.appId,
+        appKey: mathpixSettings.appKey,
+        includeMath: mathpixSettings.includeMath,
+        outputFormats: mathpixSettings.outputFormats
+      });
+
+      setResult(result);
+      setIsProcessing(false);
+      setError(result.error || null);
+    } catch (error) {
+      setIsProcessing(false);
+      setError(error instanceof Error ? error.message : 'Error desconocido');
+    }
+  }, [mathpixSettings]);
+
+  const clearResult = useCallback(() => {
+    setResult(null);
+    setSelectedFile(null);
+    setError(null);
+  }, []);
+
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
+
   return (
     <div className="min-h-screen pb-20" style={{ backgroundColor: 'var(--color-background)' }}>
       {/* Header */}
@@ -24,31 +94,10 @@ export default function OCR() {
       {/* Main Content */}
       <div className="p-4">
         {/* Upload Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
-          <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--color-text-primary)' }}>
-            Subir Imagen
-          </h2>
-          
-          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-accent)' }}>
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-            </div>
-            <p className="text-lg font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>
-              Arrastra una imagen aquí o haz clic para seleccionar
-            </p>
-            <p className="text-sm mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-              Soporta JPG, PNG, PDF y otros formatos
-            </p>
-            <button 
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
-              disabled
-            >
-              Seleccionar Archivo
-            </button>
-          </div>
-        </div>
+        <FileUpload 
+          onFileSelect={processImage}
+          isProcessing={isProcessing}
+        />
 
         {/* Camera Section */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
@@ -76,25 +125,14 @@ export default function OCR() {
         </div>
 
         {/* Results Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
-          <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--color-text-primary)' }}>
-            Resultados del OCR
-          </h2>
-          
-          <div className="text-center py-8">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <p className="text-sm mb-4" style={{ color: 'var(--color-text-secondary)' }}>
-              Los resultados del reconocimiento aparecerán aquí
-            </p>
-            <div className="text-xs px-3 py-1 rounded-full inline-block bg-gray-100 dark:bg-gray-700" style={{ color: 'var(--color-text-secondary)' }}>
-              Sube una imagen para empezar
-            </div>
-          </div>
-        </div>
+        <OCRResults
+          result={result}
+          isProcessing={isProcessing}
+          selectedFile={selectedFile}
+          error={error}
+          onClearResult={clearResult}
+          onClearError={clearError}
+        />
 
         {/* Features Preview */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
