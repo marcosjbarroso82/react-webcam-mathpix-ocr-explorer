@@ -14,6 +14,7 @@ export interface CameraSettings {
   focusDelay: number;
 }
 
+
 // Valores por defecto
 export const DEFAULT_CAMERA_SETTINGS: CameraSettings = {
   videoConstraints: {
@@ -27,6 +28,7 @@ export const DEFAULT_CAMERA_SETTINGS: CameraSettings = {
   imageSmoothing: false,
   focusDelay: 1
 };
+
 
 interface CameraSettingsContextType {
   settings: CameraSettings;

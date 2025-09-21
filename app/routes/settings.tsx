@@ -1,10 +1,11 @@
 import type { Route } from "./+types/settings";
 import CameraSettings from "../components/CameraSettings";
+import MathpixSettings from "../components/MathpixSettings";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Configuración - React Webcam Explorer" },
-    { name: "description", content: "Configuraciones de cámara y calidad para react-webcam" },
+    { title: "Configuración - Mathpix OCR Explorer" },
+    { name: "description", content: "Configuraciones de cámara y API de Mathpix para OCR" },
   ];
 }
 
@@ -17,11 +18,18 @@ export default function Settings() {
         borderColor: 'var(--color-border)' 
       }}>
         <h1 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>⚙️ Configuración</h1>
-        <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>Ajustes de cámara y calidad</p>
+        <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>Ajustes de cámara y API de Mathpix</p>
+      </div>
+
+      {/* Mathpix API Settings */}
+      <div className="p-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+          <MathpixSettings showTitle={true} showResetButton={true} />
+        </div>
       </div>
 
       {/* Camera Settings */}
-      <div className="p-4">
+      <div className="px-4">
         <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
           <CameraSettings showTitle={true} showResetButton={true} />
         </div>
