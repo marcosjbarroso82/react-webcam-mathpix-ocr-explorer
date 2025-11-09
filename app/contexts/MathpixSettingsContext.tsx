@@ -5,6 +5,7 @@ export interface MathpixSettings {
   appId: string;
   appKey: string;
   includeMath: boolean;
+  includeSmiles: boolean;
   outputFormats: string[];
 }
 
@@ -13,6 +14,7 @@ export const DEFAULT_MATHPIX_SETTINGS: MathpixSettings = {
   appId: '',
   appKey: '',
   includeMath: true,
+  includeSmiles: false,
   outputFormats: ['text', 'latex', 'mathml']
 };
 

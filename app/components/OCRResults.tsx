@@ -54,6 +54,46 @@ export default function OCRResults({
     return String(data);
   };
 
+  // Función para extraer SMILES de la respuesta
+  const extractSmiles = (data: any): string[] => {
+    if (!data || typeof data !== 'object') return [];
+    
+    const smiles: string[] = [];
+    
+    // Buscar SMILES en diferentes estructuras de respuesta posibles
+    if (data.smiles) {
+      if (Array.isArray(data.smiles)) {
+        smiles.push(...data.smiles);
+      } else if (typeof data.smiles === 'string') {
+        smiles.push(data.smiles);
+      }
+    }
+    
+    // Buscar en arrays de objetos
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        if (item.smiles) {
+          if (Array.isArray(item.smiles)) {
+            smiles.push(...item.smiles);
+          } else if (typeof item.smiles === 'string') {
+            smiles.push(item.smiles);
+          }
+        }
+      });
+    }
+    
+    // Buscar en objetos anidados (por ejemplo, data.chemistry.smiles)
+    if (data.chemistry && data.chemistry.smiles) {
+      if (Array.isArray(data.chemistry.smiles)) {
+        smiles.push(...data.chemistry.smiles);
+      } else if (typeof data.chemistry.smiles === 'string') {
+        smiles.push(data.chemistry.smiles);
+      }
+    }
+    
+    return [...new Set(smiles)]; // Eliminar duplicados
+  };
+
   if (isProcessing) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
@@ -200,6 +240,41 @@ export default function OCRResults({
                 </pre>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sección de SMILES */}
+      {result.data && extractSmiles(result.data).length > 0 && (
+        <div className="mb-4">
+          <h3 className="text-sm font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>
+            Estructuras Químicas (SMILES):
+          </h3>
+          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 space-y-2">
+            {extractSmiles(result.data).map((smiles, index) => (
+              <div key={index} className="flex items-center justify-between bg-white dark:bg-gray-800 rounded p-3">
+                <div className="flex-1">
+                  <span className="text-xs font-medium text-gray-600 dark:text-gray-400 block mb-1">
+                    SMILES {index + 1}:
+                  </span>
+                  <code className="text-sm font-mono text-green-700 dark:text-green-300 break-all">
+                    {smiles}
+                  </code>
+                </div>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(smiles);
+                  }}
+                  className="ml-2 px-2 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded transition-colors"
+                  title="Copiar SMILES"
+                >
+                  📋
+                </button>
+              </div>
+            ))}
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+              💡 Puedes usar estos códigos SMILES en herramientas como ChemDraw, RDKit, o PubChem
+            </p>
           </div>
         </div>
       )}

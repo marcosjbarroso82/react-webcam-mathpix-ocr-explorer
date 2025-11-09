@@ -56,6 +56,7 @@ export default function MathpixSettings({
       appId: '',
       appKey: '',
       includeMath: true,
+      includeSmiles: false,
       outputFormats: ['text', 'latex', 'mathml']
     });
   };
@@ -132,6 +133,22 @@ export default function MathpixSettings({
                 type="checkbox"
                 checked={tempSettings.includeMath}
                 onChange={(e) => handleSettingChange('includeMath', e.target.checked)}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Incluir Reconocimiento de Moléculas (SMILES)
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Reconocer estructuras químicas y convertir a formato SMILES
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={tempSettings.includeSmiles}
+                onChange={(e) => handleSettingChange('includeSmiles', e.target.checked)}
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
             </div>

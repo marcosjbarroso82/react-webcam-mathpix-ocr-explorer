@@ -7,6 +7,7 @@ export class MathpixService {
       appId: string;
       appKey: string;
       includeMath?: boolean;
+      includeSmiles?: boolean;
       outputFormats?: string[];
     }
   ): Promise<{
@@ -34,6 +35,7 @@ export class MathpixService {
       // Configurar opciones de procesamiento
       const processingOptions: any = {
         include_math: options.includeMath ?? true,
+        include_smiles: options.includeSmiles ?? false,
         include_latex: options.outputFormats?.includes('latex') ?? true,
         include_mathml: options.outputFormats?.includes('mathml') ?? true,
         include_text: options.outputFormats?.includes('text') ?? true,
@@ -109,6 +111,7 @@ export class MathpixService {
               type: imageFile.type
             },
             include_math: options.includeMath ?? true,
+            include_smiles: options.includeSmiles ?? false,
             include_latex: options.outputFormats?.includes('latex') ?? true,
             include_mathml: options.outputFormats?.includes('mathml') ?? true,
             include_text: options.outputFormats?.includes('text') ?? true,

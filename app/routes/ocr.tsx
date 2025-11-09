@@ -57,6 +57,7 @@ export default function OCR() {
         appId: mathpixSettings.appId,
         appKey: mathpixSettings.appKey,
         includeMath: mathpixSettings.includeMath,
+        includeSmiles: mathpixSettings.includeSmiles,
         outputFormats: mathpixSettings.outputFormats
       });
 
@@ -160,6 +161,16 @@ export default function OCR() {
               <div>
                 <h3 className="font-medium text-sm" style={{ color: 'var(--color-text-primary)' }}>Procesamiento Rápido</h3>
                 <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>Resultados en segundos</p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-3 p-3 rounded-lg" style={{ backgroundColor: 'var(--color-surface)' }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--color-accent)' }}>
+                <span className="text-white text-sm">🧪</span>
+              </div>
+              <div>
+                <h3 className="font-medium text-sm" style={{ color: 'var(--color-text-primary)' }}>Estructuras Químicas</h3>
+                <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>Convierte diagramas químicos a SMILES</p>
               </div>
             </div>
           </div>
